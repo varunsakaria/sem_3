@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program of Data Sorting</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: lightblue;
+        }
+        
+        .box {
+            width: 580px;
+            height: 310px;
+            background-color: white;
+            border: 10px solid black;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .graph {
+            width: 100%;
+            height: 250px;
+            border-bottom: 3px solid black;
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .bar {
+            width: 50px;
+            background-color: blue;
+            position: absolute;
+            bottom: 0;
+            color: white;
+            font-weight: bold;
+            padding-top: 5px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Data Sorting With(Two Methods)</h2>
+
+    <div class="box">
+        <div class="graph">
+            <div id="b0" class="bar" style="height: 180px; left: 40px;">180</div>
+            <div id="b1" class="bar" style="height: 60px; left: 140px;">60</div>
+            <div id="b2" class="bar" style="height: 220px; left: 240px;">220</div>
+            <div id="b3" class="bar" style="height: 140px; left: 340px;">140</div>
+            <div id="b4" class="bar" style="height: 90px; left: 440px;">90</div>
+        </div>
+        
+        <div class="button-group">
+            <button id="selectionBtn" onclick="startSelectionSort()">Selection_Sort</button>
+            <button id="bubbleBtn" onclick="startBubbleSort()">Bubble_Sort</button>
+            <button id="resetBtn" onclick="resetVisualizer()">Reset_Data</button>
+        </div>
+    </div>
+
+    <script>
+        var data = [180, 60, 220, 140, 90];
+        
+        var i = 0;
+        var j = 0;
+        var minIndex = 0; 
+        var timer;
+
+        function updateScreen() {
+            for (var k = 0; k < 5; k++) {
+                var barElement = document.getElementById("b" + k);
+                barElement.style.height = data[k] + "px";
+                barElement.innerHTML = data[k];
+                barElement.style.backgroundColor = "blue"; 
+            }
+        }
+
+        function toggleButtons(disabledState) {
+            document.getElementById("bubbleBtn").disabled = disabledState;
+            document.getElementById("selectionBtn").disabled = disabledState;
+        }
+        function resetVisualizer() {
+            clearInterval(timer);
+            data=[180, 60, 220, 140, 90];
+            j = 0; 
+            j = 0;
+            updateScreen();
+            toggleButtons(false);
+        }
+
+        function selectionSortStep() {
+            if (i < data.length - 1) {
+                if (j < data.length) {
+                    if (data[j] < data[minIndex]) {
+                        minIndex = j; 
+                    }
+                    j++;
+                } else {
+                    if (minIndex !== i) {
+                        var temp = data[i];
+                        data[i] = data[minIndex];
+                        data[minIndex] = temp;
+                    }
+                    i++;
+                    j = i + 1;
+                    minIndex = i;
+                }
+                updateScreen();
+            } else {
+                finishSorting();
+            }
+        }
+
+        function bubbleSortStep() {
+            if (i < data.length) {
+                if (j < data.length - i - 1) {
+                    if (data[j] > data[j + 1]) {
+                        var temp = data[j];
+                        data[j] = data[j + 1];
+                        data[j + 1] = temp;
+                    }
+                    j++;
+                } else {
+                    j = 0;
+                    i++;
+                }
+                updateScreen();
+            } else {
+                finishSorting();
+            }
+        }
+
+        function finishSorting() {
+            clearInterval(timer);
+            for (var k = 0; k < 5; k++) {
+                document.getElementById("b" + k).style.backgroundColor = "green";
+            }
+            toggleButtons(false);
+        }
+
+        function startSelectionSort() {
+            resetVisualizer();
+            toggleButtons(true);
+            i = 0;
+            minIndex = 0;
+            j = 1; 
+            timer = setInterval(selectionSortStep, 400);
+        }
+
+        function startBubbleSort() {
+            resetVisualizer();
+            toggleButtons(true);
+            i = 0;
+            j = 0;
+            timer = setInterval(bubbleSortStep, 400);
+        }
+    </script>
+</body>
+</html>
