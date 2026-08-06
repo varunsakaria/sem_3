@@ -80,7 +80,7 @@
         }
 
     .hero{
-            min-height: 75vh;
+            min-height: 70vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -171,19 +171,108 @@
     }
 
     .calculator-section {
-        padding: 80px 30px;
+        padding: 80px 20px;
         background: rgba(0,0,0,0.2);
         border-top: 1px solid rgba(255,255,255,0.05);
-        text-align: center;
     }
 
-    .calc-container {
-        max-width: 500px;
+    .form-card {
+        max-width: 550px;
         margin: 0 auto;
         background: rgba(255,255,255,0.03);
         border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 12px;
-        padding: 30px;
+        border-radius: 16px;
+        padding: 35px 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .form-card p.subtitle {
+        text-align: center;
+        color: #94a3b8;
+        font-size: 14px;
+        margin-bottom: 30px;
+    }
+
+    .form-group {
+        margin-bottom: 22px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+        color: #cbd5e1;
+        font-weight: 500;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 16px;
+        background: rgba(15,23,42,0.8);
+        border: 1px solid rgba(255,255,255,0.15);
+        border-radius: 8px;
+        color: #ffffff;
+        font-size: 15px;
+        outline: none;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .form-control:focus {
+        border: #818cf8;
+        box-shadow: 0 0 0 3px rgba(129,140,248,0.2);
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 15px;
+        margin-top: 10px;
+    }
+
+    .btn-submit {
+        flex: 2;
+        background: #818cf8;
+        color: #ffffff;
+        border: none;
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .btn-submit:hover {
+        background: #6366f1;
+    }
+
+    .btn-reset {
+        flex: 1;
+        background: rgba(255,255,255,0.05);
+        color: #94a3b8;
+        border: 1px solid rgba(255,255,255,0.15);
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background 0.3s, color 0.3s;
+    }
+
+    .btn-reset:hover {
+        background: rgba(255,255,255,0.1);
+        color: #ffffff;
+    }
+
+    .result-box {
+        margin-top: 25px;
+        padding: 18px;
+        background: rgba(129,140,248,0.08);
+        border: 1px dashed rgba(129,140,248,0.4);
+        border-radius: 8px;
+        text-align: center;
+        color: #818cf8;
+        font-size: 15px;
+        font-weight: 500;
     }
 
     footer {
@@ -248,11 +337,50 @@
 
             <section id="Calculator" class="calculator-section">
                 <h2 class="section-title">Space Calculator</h2>
-                <div class="calc-container">
-                    <p style="color: #94a3b8; font-style: italic;">
-                        [ Space Calculator UI & Interactivity Design - Ready for Task 5 Form Design ]
-                    </p>
-                </div>
+
+                <div class="form-card">
+                    <p class="subtitle">calculate your weight or age on other planets in our solar system.</p>
+
+                    <form id="spaceForm" onsubmit="event.defaultPreventedDefault();">
+                        <div class="form-group">
+                            <label for="userWeight">Your Weight on Earth(kg):</label>
+
+                            <input 
+                                    type="number" 
+                                    id="userWeight" 
+                                    class="form-control" 
+                                    placeholder="e.g. , 60" 
+                                    required
+                                    min="1" 
+                                    max="99" 
+                                    oninput="if(this.value.length > 2) this.value = this.value.slice(0, 2);"
+                                    >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="planetSelect">Select Target Planet / Moon:</label>
+                            <select id="planetSelect" class="form-control" required>
+                                <option value="" disabled Selected>-- Choose a destination --</option>
+
+                                <option value="moon">Moon</option>
+                                <option value="mars">Mars</option>
+                                <option value="jupiter">Jupiter</option>
+                                <option value="saturn">Saturn</option>
+                                <option value="venus">Venus</option>
+                                <option value="mercury">Mercury</option>
+                            </select>
+                        </div>
+
+                        <div class="btn-group">
+                            <button type="submit" class="btn-submit">calculate Weight</button>
+                            <button type="reset" class="btn-reset">Reset</button>
+                        </div>
+
+                        <div class="result-box" id="resultDisplay">
+                            Enter your weight and select a planet to see results!
+                        </div>
+                    </form>
+                </div>    
             </section>
     </main>
 
